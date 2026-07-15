@@ -1,4 +1,5 @@
 import { useTheme } from '../context/ThemeContext'
+import profileImg from '../assets/Profile.jpeg'
 
 export default function About() {
   const { isDark } = useTheme()
@@ -17,7 +18,7 @@ export default function About() {
           <div className="w-full order-first md:order-last opacity-0 animate-scaleIn delay-300">
             <div className={`relative w-full aspect-[3/4] overflow-hidden rounded-2xl ${isDark ? 'border border-gray-700/50' : 'border border-gray-200'}`}>
               <img 
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&crop=face" 
+                src={profileImg}
                 alt="Bhaskar Mandapati"
                 className="w-full h-full object-cover object-top"
               />

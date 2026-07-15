@@ -1,5 +1,6 @@
 import { useTheme } from '../context/ThemeContext'
 import { FaLinkedin, FaInstagram, FaTwitter } from 'react-icons/fa'
+import profileImg from '../assets/Profile.jpeg'
 
 export default function Home() {
   const { isDark } = useTheme()
@@ -55,7 +56,7 @@ export default function Home() {
             <div className="w-full opacity-0 animate-scaleIn delay-300">
               <div className={`relative w-full aspect-[3/4] overflow-hidden rounded-2xl transition-all duration-500 hover:scale-[1.02] ${isDark ? 'border border-gray-700/50' : 'border border-gray-200'}`}>
                 <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=533&fit=crop&crop=face"
+                  src={profileImg}
                   alt="Bhaskar Mandapati portrait"
                   className="w-full h-full object-cover object-top"
                 />
