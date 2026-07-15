@@ -11,7 +11,7 @@ import './App.css'
 function App() {
   return (
     <ThemeProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/bhaskar-portfolio">
         <ScrollToTop />
         <Navbar />
         <Routes>
