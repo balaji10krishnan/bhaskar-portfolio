@@ -72,19 +72,24 @@ export default function Blogs() {
     }
     return () => { document.body.style.overflow = '' }
   }, [selectedBlog])
+  
   const featured = blogs[0]
   const remaining = blogs.slice(1)
 
   return (
-    <div className={`min-h-screen pt-28 sm:pt-24 pb-16 ${isDark ? 'bg-dark' : 'bg-white'}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className={`min-h-screen pt-28 sm:pt-24 pb-16 ${isDark ? 'bg-dark bg-grid-dark' : 'bg-white bg-grid-light'}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="text-center mb-12 opacity-0 animate-fadeIn">
           <h1 className={`text-4xl sm:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-dark'}`}>Blogs</h1>
           <p className={isDark ? 'text-gray-400' : 'text-gray-500'}>Thoughts, stories and ideas from my adventures</p>
         </div>
 
         {/* Featured Blog */}
-        <article onClick={() => setSelectedBlog(featured)} className={`group rounded-2xl overflow-hidden mb-10 transition-all opacity-0 animate-fadeIn delay-200 cursor-pointer ${isDark ? 'bg-dark-lighter border border-gray-800 hover:border-gray-600' : 'bg-gray-50 border border-gray-200 hover:border-gray-300'}`}>
+        <article onClick={() => setSelectedBlog(featured)} className={`group rounded-2xl overflow-hidden mb-10 transition-all duration-300 opacity-0 animate-fadeIn delay-200 cursor-pointer ${
+          isDark
+            ? 'bg-dark-lighter border border-gray-800 hover:border-gray-600 hover:shadow-xl hover:shadow-accent/5'
+            : 'bg-gray-50 border border-gray-200 hover:border-gray-300 hover:shadow-xl hover:shadow-gray-200/50'
+        }`}>
           <div className="grid md:grid-cols-2 gap-0">
             <div className="aspect-video md:aspect-auto overflow-hidden">
               <img 
@@ -107,13 +112,15 @@ export default function Blogs() {
                   {featured.readTime}
                 </span>
               </div>
-              <h2 className={`text-2xl font-bold mb-3 ${isDark ? 'text-white group-hover:text-accent' : 'text-dark group-hover:text-accent'} transition-colors`}>
+              <h2 className={`text-2xl font-bold mb-3 transition-colors ${
+                isDark ? 'text-white group-hover:text-accent' : 'text-dark group-hover:text-accent'
+              }`}>
                 {featured.title}
               </h2>
               <p className={`text-sm mb-6 leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{featured.excerpt}</p>
-              <button onClick={() => setSelectedBlog(featured)} className="inline-flex items-center gap-1 text-accent text-sm font-medium hover:gap-2 transition-all w-fit pointer-events-none">
+              <span className="inline-flex items-center gap-1 text-accent text-sm font-medium group-hover:gap-2 transition-all w-fit">
                 Read More <ArrowRight size={16} />
-              </button>
+              </span>
             </div>
           </div>
         </article>
@@ -121,12 +128,17 @@ export default function Blogs() {
         {/* Blog Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {remaining.map((blog, index) => (
-            <article key={blog.id} onClick={() => setSelectedBlog(blog)} className={`group rounded-xl overflow-hidden transition-all opacity-0 animate-fadeIn cursor-pointer ${isDark ? 'bg-dark-lighter border border-gray-800 hover:border-gray-600' : 'bg-gray-50 border border-gray-200 hover:border-gray-300'}`} style={{ animationDelay: `${300 + index * 100}ms` }}>
+            <article key={blog.id} onClick={() => setSelectedBlog(blog)} className={`group rounded-xl overflow-hidden transition-all duration-300 opacity-0 animate-fadeIn cursor-pointer ${
+              isDark
+                ? 'bg-dark-lighter border border-gray-800 hover:border-gray-600 hover:shadow-xl hover:shadow-accent/5'
+                : 'bg-gray-50 border border-gray-200 hover:border-gray-300 hover:shadow-xl hover:shadow-gray-200/50'
+            }`} style={{ animationDelay: `${300 + index * 100}ms` }}>
               <div className="aspect-video overflow-hidden">
                 <img 
                   src={blog.image} 
                   alt={blog.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
                 />
               </div>
               <div className="p-6">
@@ -140,13 +152,15 @@ export default function Blogs() {
                     {blog.readTime}
                   </span>
                 </div>
-                <h2 className={`text-lg font-semibold mb-2 ${isDark ? 'text-white group-hover:text-accent' : 'text-dark group-hover:text-accent'} transition-colors`}>
+                <h2 className={`text-lg font-semibold mb-2 transition-colors ${
+                  isDark ? 'text-white group-hover:text-accent' : 'text-dark group-hover:text-accent'
+                }`}>
                   {blog.title}
                 </h2>
                 <p className={`text-sm mb-4 line-clamp-2 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{blog.excerpt}</p>
-                <button onClick={() => setSelectedBlog(blog)} className="inline-flex items-center gap-1 text-accent text-sm font-medium hover:gap-2 transition-all pointer-events-none">
+                <span className="inline-flex items-center gap-1 text-accent text-sm font-medium group-hover:gap-2 transition-all">
                   Read More <ArrowRight size={16} />
-                </button>
+                </span>
               </div>
             </article>
           ))}
@@ -159,9 +173,13 @@ export default function Blogs() {
           className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fadeIn"
           onClick={() => setSelectedBlog(null)}
         >
-          <div className="absolute inset-0 bg-dark/80 backdrop-blur-sm"></div>
+          <div className={`absolute inset-0 backdrop-blur-sm ${isDark ? 'bg-dark/80' : 'bg-gray-900/50'}`}></div>
           <div 
-            className={`relative w-full max-w-3xl max-h-[90vh] flex flex-col rounded-2xl overflow-hidden ${isDark ? 'bg-dark-lighter border border-gray-700' : 'bg-white border border-gray-200'}`}
+            className={`relative w-full max-w-3xl max-h-[90vh] flex flex-col rounded-2xl overflow-hidden transition-all duration-300 ${
+              isDark
+                ? 'bg-dark-lighter border border-gray-700 shadow-2xl shadow-black/30'
+                : 'bg-white border border-gray-200 shadow-2xl shadow-gray-300/30'
+            }`}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header Image - Fixed */}
@@ -171,10 +189,12 @@ export default function Blogs() {
                 alt={selectedBlog.title}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
               <button 
                 onClick={() => setSelectedBlog(null)}
-                className={`absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center transition-all ${isDark ? 'bg-dark/80 text-white hover:bg-dark' : 'bg-white/80 text-dark hover:bg-white'}`}
+                className={`absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 ${
+                  isDark ? 'bg-dark/80 text-white hover:bg-dark' : 'bg-white/80 text-dark hover:bg-white'
+                }`}
               >
                 <X size={20} />
               </button>
